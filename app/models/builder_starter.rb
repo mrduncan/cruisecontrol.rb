@@ -20,15 +20,7 @@ class BuilderStarter
   end
   
   def self.begin_builder(project_name)
-    cruise_executable =
-        if Platform.interpreter =~ /jruby/
-          Platform.interpreter + ' ' + path_to_cruise
-        elsif Platform.family == 'mswin32'
-          "ruby #{path_to_cruise}"
-        else
-          path_to_cruise
-        end
-
+    cruise_executable = "#{builder_interpreter} #{path_to_cruise}".strip
     verbose_option = $VERBOSE_MODE ? " --trace" : ""
     command = "#{cruise_executable} build #{project_name}#{verbose_option}"
 
@@ -39,4 +31,15 @@ class BuilderStarter
     CommandLine.escape(File.join(RAILS_ROOT, "cruise#{extension}"))
   end
 
+  private
+    # Returns the interpreter command to be used when running cruise
+    def self.builder_interpreter
+      if Platform.interpreter =~ /jruby/
+        Platform.interpreter
+      elsif Platform.family == 'mswin32'
+        'ruby'
+      else
+        ''
+      end
+    end
 end
