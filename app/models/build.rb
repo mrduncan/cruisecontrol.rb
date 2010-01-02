@@ -166,8 +166,8 @@ EOF
   
   def rake
     # Simply calling rake is this convoluted due to idiosyncrazies of Windows, Debian and JRuby. :(
-    # ABSOLUTE_RAILS_ROOT is set in config/envirolnment.rb, and is necessary because
-    # in_clean_environment__with_local_copy() changes current working directory. Replacing it with RAILS_ROOT doesn't
+    # ABSOLUTE_RAILS_ROOT is set in config/environment.rb, and is necessary because
+    # in_clean_environment_with_local_copy() changes current working directory. Replacing it with RAILS_ROOT doesn't
     # fail any tests, because in test environment (unlike production) RAILS_ROOT is already absolute. 
     # --nosearch flag here prevents CC.rb from building itself when a project has no Rakefile
     # ARGV.clear at the end prevents Test::Unit's AutoRunner from doing anything silly, like trying to require 'cc:rb'
